@@ -29,7 +29,7 @@ def scan_port(target_ip, port):
 
 def scan_ports(target_ip):
     threads = []
-    for port in range(1, 900):
+    for port in range(1, 1025):
         t = Thread(target=scan_port, args=(target_ip, port))
         t.start()
         threads.append(t)
