@@ -1,5 +1,8 @@
 import socket
 from threading import Thread
+import logging
+
+logging.basicConfig(filename='logname', filemode='a', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def is_valid_ip(ip):
     # Проверяем, является ли адрес локальным или некорректным
@@ -22,10 +25,10 @@ def scan_port(target_ip, port):
         s.settimeout(1)
         result = s.connect_ex((target_ip, port))
         if result == 0:
-            print(f"Port {port} is open on {target_ip}")
+            logging.info(f"Port {port} is open on {target_ip}")
         s.close()
     except Exception as e:
-        print(f"Error scanning port {port}: {e}")
+        logging.info(f"Error scanning port {port}: {e}")
 
 def scan_ports(target_ip):
     threads = []
@@ -43,6 +46,5 @@ for ip1 in range(1, 256):
             for ip4 in range(1, 256):
                 target_ip = f"{ip1}.{ip2}.{ip3}.{ip4}"
                 if is_valid_ip(target_ip):
-                    print(f"Scanning {target_ip}...")
+                    logging.info(f"Scanning {target_ip}...")
                     scan_ports(target_ip)
-                  
